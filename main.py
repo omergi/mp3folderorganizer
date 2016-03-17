@@ -17,6 +17,10 @@ def create_dir(dir_name):
         os.makedirs(full_dir_name)
     return full_dir_name
 
+def get_title(audiofile):
+    if audiofile.tag.title is None:
+        return ''
+    return audiofile.tag.title.strip()
 
 def main():
     if len(sys.argv) < 1:
@@ -28,7 +32,7 @@ def main():
         artist = get_artist(i)
         dir_name = create_dir(artist)
         try:
-            dest_path = os.path.join(dir_name, '%s - %s.mp3' % (artist, i.tag.title.strip()))
+            dest_path = os.path.join(dir_name, '%s - %s.mp3' % (artist, get_title(mp3_file)))
         except Exception:
             with open('log.txt', 'ab') as f:
                 f.write(i.path)
